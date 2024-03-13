@@ -65,6 +65,26 @@ app.get(apiPath + version + "/books", (req, res) => {
   res.status(200).json(books);
 });
 
+//GET request to return a specific book by its id
+app.get(apiPath + version + "/books/:id", (req, res) => {
+
+});
+
+//POST request to create a new book within a specific genre
+app.post(apiPath + version + "/genres/:genreId/books", (req, res) => {
+
+});
+
+//PATCH request to partially update a book by id
+app.patch(apiPath + version + "/books/:id", (req, res) => {
+
+});
+
+//DELETE request to delete a book by id
+app.delete(apiPath + version + "/books/:id", (req, res) => {
+
+});
+
 //GET request for all genres
 app.get(apiPath + version + "/genres", (req, res) => {
   res.status(200).json(genres);
@@ -87,7 +107,7 @@ app.post(apiPath + version + "/genres", (req, res) => {
   });
 
   if(nameExists){
-    return res.status(409).json({
+    return res.status(400).json({
       message: "This genre name already exists",
     })
   }
