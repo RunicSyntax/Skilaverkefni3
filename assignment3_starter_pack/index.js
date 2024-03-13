@@ -8,7 +8,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-
+const apiPath = "/api/";
+const version = "v1";
 const port = 3000;
 
 //Tell express to use the body parser module
@@ -35,7 +36,10 @@ const genres = [
 ];
 
 const books = [
-  { id: 1, title: "Pride and Prejudice", author: "Jane Austin", genreId: 1 },
+  { id: 1, title: "Pride and Prejudice",
+    author: "Jane Austin", 
+    genreId: 1 
+  },
   {
     id: 2,
     title: "Independent People",
@@ -53,6 +57,7 @@ const books = [
 /* YOUR CODE STARTS HERE */
 
 // TODO: Implement all logic from the assignment desription
+
 
 /* YOUR CODE ENDS HERE */
 
