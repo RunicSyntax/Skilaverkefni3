@@ -58,10 +58,12 @@ const books = [
 
 // TODO: Implement all logic from the assignment desription
 
+//GET request for all books
 app.get(apiPath + version + "/books", (req, res) => {
   res.status(200).json(books);
 });
 
+//GET request for all genres
 app.get(apiPath + version + "/genres", (req, res) => {
   res.status(200).json(genres);
 });
