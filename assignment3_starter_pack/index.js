@@ -35,6 +35,8 @@ const genres = [
   { id: 4, name: "Fantasy" },
 ];
 
+let nextGenreId = 5;
+
 const books = [
   { id: 1, title: "Pride and Prejudice",
     author: "Jane Austin", 
@@ -67,6 +69,25 @@ app.get(apiPath + version + "/books", (req, res) => {
 app.get(apiPath + version + "/genres", (req, res) => {
   res.status(200).json(genres);
 });
+
+app.post(apiPath + version + "/genres", (req, res) => {
+  if(
+    !req.body.name
+  )
+  {
+    return res.status(400).json({
+      message: "Genres require at least a name.",
+    });
+  } else{
+    const newGenre = {
+      id: nextGenreId,
+      name: req.body.name,
+    };
+    genres.push(newGenre);
+    nextGenreId++;
+    res.status(201).json(newGenre);
+  }
+})
 
 /* YOUR CODE ENDS HERE */
 
