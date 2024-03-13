@@ -70,23 +70,35 @@ app.get(apiPath + version + "/genres", (req, res) => {
   res.status(200).json(genres);
 });
 
+//POST request for genres
 app.post(apiPath + version + "/genres", (req, res) => {
-  if(
-    !req.body.name
-  )
-  {
+  if(!req.body.name) {
     return res.status(400).json({
       message: "Genres require at least a name.",
     });
-  } else{
-    const newGenre = {
-      id: nextGenreId,
-      name: req.body.name,
-    };
-    genres.push(newGenre);
-    nextGenreId++;
-    res.status(201).json(newGenre);
   }
+  
+  let nameExists = false;
+
+  genres.forEach(element => {
+    if(req.body.name.toLowerCase() === element.name.toLowerCase()){
+      nameExists = true;
+    };
+  });
+
+  if(nameExists){
+    return res.status(409).json({
+      message: "This genre name already exists",
+    })
+  }
+  const newGenre = {
+    id: nextGenreId,
+    name: req.body.name,
+  };
+  genres.push(newGenre);
+  nextGenreId++;
+  res.status(201).json(newGenre);
+
 })
 
 /* YOUR CODE ENDS HERE */
