@@ -60,7 +60,23 @@ const books = [
 
 //GET request for all books
 app.get(apiPath + version + "/books", (req, res) => {
-  res.status(200).json(books);
+  const filter = req.query.filter;
+  let filteredBooks = [];
+
+  if (filter) {
+    // Filter books based on the genre
+    const filterGenreId = genres.find(genre => genre.name === filter);
+
+    books.forEach(book => {
+      book.genreId === filterGenreId;
+      filteredBooks.push(book)
+    })
+
+    // Respond with the filtered list of books
+    res.status(200).json(filteredBooks);
+  } else {
+    res.status(200).json(books);
+  }
 });
 
 //GET request to return a specific book by its id
@@ -90,9 +106,10 @@ app.get(apiPath + version + "/genres", (req, res) => {
 
 //POST request for genres
 app.post(apiPath + version + "/genres", (req, res) => {
-  if(!req.body.name) {
+  
+  if(!req.body.name || typeof req.body.name !== 'string' || req.body.name.trim().length === 0) {
     return res.status(400).json({
-      message: "Genres require at least a name.",
+      message: "Genres require at valid name.",
     });
   }
   
@@ -106,7 +123,7 @@ app.post(apiPath + version + "/genres", (req, res) => {
 
   if(nameExists){
     return res.status(400).json({
-      message: "This genre name already exists",
+      message: "This genre name already exists.",
     })
   }
   const newGenre = {
