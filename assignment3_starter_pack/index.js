@@ -35,8 +35,6 @@ const genres = [
   { id: 4, name: "Fantasy" },
 ];
 
-let nextGenreId = 5;
-
 const books = [
   { id: 1, title: "Pride and Prejudice",
     author: "Jane Austin", 
@@ -65,29 +63,28 @@ app.get(apiPath + version + "/books", (req, res) => {
   res.status(200).json(books);
 });
 
+//GET request to return a specific book by its id
+app.get(apiPath + version + "/books/:id", (req, res) => {
+
+});
+
+//POST re
+app.post(apiPath + version + "/genres/:genreId/books", (req, res) => {
+  // Logic to create a new book within a specific genre
+});
+
+app.patch(apiPath + version + "/books/:id", (req, res) => {
+  // Logic to partially update a book by id
+});
+
+app.delete(apiPath + version + "/books/:id", (req, res) => {
+  // Logic to delete a book by id
+});
+
 //GET request for all genres
 app.get(apiPath + version + "/genres", (req, res) => {
   res.status(200).json(genres);
 });
-
-app.post(apiPath + version + "/genres", (req, res) => {
-  if(
-    !req.body.name
-  )
-  {
-    return res.status(400).json({
-      message: "Genres require at least a name.",
-    });
-  } else{
-    const newGenre = {
-      id: nextGenreId,
-      name: req.body.name,
-    };
-    genres.push(newGenre);
-    nextGenreId++;
-    res.status(201).json(newGenre);
-  }
-})
 
 /* YOUR CODE ENDS HERE */
 
