@@ -68,23 +68,56 @@ app.get(apiPath + version + "/books/:id", (req, res) => {
 
 });
 
-//POST re
+//POST request to create a new book within a specific genre
 app.post(apiPath + version + "/genres/:genreId/books", (req, res) => {
-  // Logic to create a new book within a specific genre
+
 });
 
+//PATCH request to partially update a book by id
 app.patch(apiPath + version + "/books/:id", (req, res) => {
-  // Logic to partially update a book by id
+
 });
 
+//DELETE request to delete a book by id
 app.delete(apiPath + version + "/books/:id", (req, res) => {
-  // Logic to delete a book by id
+
 });
 
 //GET request for all genres
 app.get(apiPath + version + "/genres", (req, res) => {
   res.status(200).json(genres);
 });
+
+//POST request for genres
+app.post(apiPath + version + "/genres", (req, res) => {
+  if(!req.body.name) {
+    return res.status(400).json({
+      message: "Genres require at least a name.",
+    });
+  }
+  
+  let nameExists = false;
+
+  genres.forEach(element => {
+    if(req.body.name.toLowerCase() === element.name.toLowerCase()){
+      nameExists = true;
+    };
+  });
+
+  if(nameExists){
+    return res.status(400).json({
+      message: "This genre name already exists",
+    })
+  }
+  const newGenre = {
+    id: nextGenreId,
+    name: req.body.name,
+  };
+  genres.push(newGenre);
+  nextGenreId++;
+  res.status(201).json(newGenre);
+
+})
 
 /* YOUR CODE ENDS HERE */
 
